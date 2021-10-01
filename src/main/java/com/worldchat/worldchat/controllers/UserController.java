@@ -38,7 +38,7 @@ public class UserController {
         Optional<User> users = _userRepository.findById(id);
         if(users.isPresent()){
             users.get().setPasswordPrivate();
-            return new ResponseEntity<User>(users.get(), HttpStatus.OK);
+            return new ResponseEntity<>(users.get(), HttpStatus.OK);
         }
         Error error = new Error(HttpStatus.NOT_FOUND, "O usuário não foi encontrado.");
         return new ResponseEntity<>(error, error.statusText);

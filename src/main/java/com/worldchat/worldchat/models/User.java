@@ -1,8 +1,10 @@
 package com.worldchat.worldchat.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.*;
 
 @Data
 @Entity
@@ -18,7 +20,7 @@ public class User {
     @Column(name = "password", nullable = false, length = 50)
     private String password;
     @Column(name = "profile_pic", nullable = true, length = 999)
-    private String profile_pic;
+    private String profilePic;
 
     public Long getId() {
         return id;
@@ -56,11 +58,11 @@ public class User {
         this.password = null;
     }
 
-    public String getProfile_pic() {
-        return profile_pic;
+    public String getProfilePic() {
+        return profilePic;
     }
 
-    public void setProfile_pic(String profile_pic) {
-        this.profile_pic = profile_pic;
+    public void setProfile_pic(String profilePic) {
+        this.profilePic = profilePic;
     }
 }
