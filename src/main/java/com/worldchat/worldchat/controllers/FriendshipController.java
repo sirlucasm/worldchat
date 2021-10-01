@@ -56,4 +56,17 @@ public class FriendshipController {
         Error error = new Error(HttpStatus.NOT_FOUND, "Você não tem nenhum amigo ainda.");
         return new ResponseEntity<>(error, error.statusText);
     }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
+    public ResponseEntity acceptFriendship(@RequestBody Friendship body, @PathVariable(value = "id") long id) {
+        Optional<Friendship> oldFriendship = _friendshipRepository.findById(id);
+        if (oldFriendship.isPresent()) {
+            Friendship friendship = oldFriendship.get();
+            friendship.setAccepted(body.getAccepted());
+            _friendshipRepository.save(friendship);
+            return new ResponseEntity<>(friendship, HttpStatus.OK);
+        }
+        Error error = new Error(HttpStatus.NOT_FOUND, "Não foi possível aceitar a amizade.");
+        return new ResponseEntity<>(error, error.statusText);
+    }
 }
