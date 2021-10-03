@@ -1,7 +1,6 @@
 package com.worldchat.worldchat.controllers;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import com.worldchat.worldchat.handler.Error;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ public class RoomController {
     public ResponseEntity find(@PathVariable(value = "id") long id) {
         Optional<Room> room = _roomRepository.findById(id);
         if(room.isPresent()){
-            return new ResponseEntity<Room>(room.get(), HttpStatus.OK);
+            return new ResponseEntity<>(room.get(), HttpStatus.OK);
         }
         Error error = new Error(HttpStatus.NOT_FOUND, "Não foi possível encontrar a sala.");
         return new ResponseEntity<>(error, error.statusText);
