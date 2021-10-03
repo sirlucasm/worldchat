@@ -3,6 +3,7 @@ package com.worldchat.worldchat.controllers;
 import java.util.*;
 
 import com.worldchat.worldchat.handler.Error;
+import com.worldchat.worldchat.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,16 @@ public class RoomController {
             return new ResponseEntity<>(room.get(), HttpStatus.OK);
         }
         Error error = new Error(HttpStatus.NOT_FOUND, "Não foi possível encontrar a sala.");
+        return new ResponseEntity<>(error, error.statusText);
+    }
+
+    @RequestMapping(value = "/my-rooms", method = RequestMethod.GET)
+    public ResponseEntity myRooms(@RequestBody User createdBy) {
+        List<Room> rooms = _roomRepository.findByCreatedBy(createdBy);
+        if(!rooms.isEmpty()){
+            return new ResponseEntity<>(rooms, HttpStatus.OK);
+        }
+        Error error = new Error(HttpStatus.NOT_FOUND, "Você ainda não está em nenhuma sala.");
         return new ResponseEntity<>(error, error.statusText);
     }
 
